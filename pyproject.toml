@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ml-algorithms"
+version = "0.0.1"
+authors = [
+    { name="Vish501"},
+]
+description = "Package containing the popular machine learning algorithms"
+readme = "README.md"
+requires-python = ">=3.11.0"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/Vish501/ML-Algorithms"
+Issues = "https://github.com/Vish501/ML-Algorithms/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
