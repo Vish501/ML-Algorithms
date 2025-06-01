@@ -26,24 +26,45 @@ class KMeans:
 
         # Optimize clusters
         for _ in range(self.max_iters):
-            pass
+            # Assign samples to closest centroids (i.e., create clusters)
+            self.clusters = self._create_clusters(self.centroids)
+
+            # Plotting
+            if self.plot_steps:
+                self.plot()
+
+            # Calculate the new centroids based on the new clusters
+            old_centroids = self.centroids
+            self.centroids = self._get_centroids(self.clusters)
+
+            # If the old_centroids == new_centroids stop the iterations
+            if self._is_converged(old_centroids, self.centroids): 
+                break
+
+        # Classify the samples as the idx of their clusters
+        return self._get_cluster_labels(self.clusters)
         
+
     def plot(self):
         # Plot
         pass
     
+
     def _create_clusters(self, centroids):
         # Assign samples to the closest cluster
         pass
+
 
     def _is_converged(self, old_centroids, centroids):
         # Check if there has been no change in the centroids from the current and prior iteration
         pass
 
-    def _get_cluster_labels(self, clusters):
-        # Get the label of each sample based on the cluster they are assigned to
+
+    def _get_centroids(self, clusters):
+        # Get the centroids
         pass
 
 
-
-    
+    def _get_cluster_labels(self, clusters):
+        # Get the label of each sample based on the cluster they are assigned to
+        pass
