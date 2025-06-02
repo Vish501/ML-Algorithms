@@ -26,7 +26,7 @@ class KMeans:
         self.centroids = [self.X[idx] for idx in rand_idxs]
 
         # Optimize clusters
-        for _ in tqdm(range(self.max_iters)):
+        for n in tqdm(range(self.max_iters)):
             # Assign samples to closest centroids (i.e., create clusters)
             self.clusters = self._create_clusters(self.centroids)
 
@@ -39,7 +39,8 @@ class KMeans:
             self.centroids = self._get_centroids(self.clusters)
 
             # If the old_centroids == new_centroids stop the iterations
-            if self._is_converged(old_centroids, self.centroids): 
+            if self._is_converged(old_centroids, self.centroids):
+                print(f"Process Completed in {n} iterations")
                 break
 
         # Classify the samples as the idx of their clusters
