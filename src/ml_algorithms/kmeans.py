@@ -65,7 +65,7 @@ class KMeans:
             # Check for convergence (no change in centroids)
             # If the old_centroids == new_centroids stop the iterations
             if self._has_converged(old_centroids, self.centroids):
-                print(f"Converged after {iteration} iterations")
+                tqdm.write(f"Converged after {iteration} iterations") # Using tqdm instead of print due to rendering issues
                 break
 
         # Classify the samples as the idx of their clusters
