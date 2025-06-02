@@ -26,7 +26,7 @@ class KMeans:
         self.centroids = [self.X[idx] for idx in rand_idxs]
 
         # Optimize clusters
-        for _ in tdqm(range(self.max_iters)):
+        for _ in tqdm(range(self.max_iters)):
             # Assign samples to closest centroids (i.e., create clusters)
             self.clusters = self._create_clusters(self.centroids)
 
