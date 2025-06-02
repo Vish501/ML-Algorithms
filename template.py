@@ -12,7 +12,9 @@ list_of_files = [
     "src/ml_algorithms/__init__.py",
     "src/ml_algorithms/kmeans.py",
     "pyproject.toml",
-    "requirements.txt",
+    "requirements/models.txt",
+    "requirements/tests.txt",
+    "test/kmeans.py",
 ]
 
 # Iterate through each file path
