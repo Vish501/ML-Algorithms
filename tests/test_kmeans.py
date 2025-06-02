@@ -4,7 +4,7 @@ from sklearn.datasets import make_blobs
 from ml_algorithms.kmeans import KMeans # Custom KMeans implementation
 
 def blob_data(n_clusters, n_samples, n_features):
-    # Generate synthetic 2D classification data with 3 centers
+    '''Generate synthetic 2D classification data with 3 centers'''
     X, y = make_blobs(
         centers=n_clusters,    # Number of centers/clusters
         n_samples=n_samples,   # Total number of data points
