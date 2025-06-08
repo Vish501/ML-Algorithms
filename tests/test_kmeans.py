@@ -94,14 +94,44 @@ def test_kmeans_label_range(n_clusters: int=3, n_samples: int=300, n_features: i
     assert all(label in range(n_clusters) for label in np.unique(y_pred))
 
 
-def test_kmeans_convergence():
-    """Tests that centroids actually stop changing."""
-    pass
+def test_kmeans_convergence(n_clusters: int=3, n_samples: int=300, n_features: int=2, max_iters: int=150, plot_steps: bool=False):
+    """Tests that centroids are not null."""
+    X, y = blob_data(n_clusters, n_samples, n_features)
 
+    # Ensure the data has been properly generated
+    assert len(np.unique(y)) == n_clusters
 
-def test_kmeans_against_sklearn():
+    model = KMeans(k=n_clusters, max_iters=max_iters, plot_steps=plot_steps, random_seed=42)
+
+    # Ensure centroids are empty on initialization
+    assert model.centroids == []
+
+    model.predict(X)
+    final_centroids = model.centroids
+
+    # After prediction, centroids must be populated
+    assert len(final_centroids) == n_clusters
+    assert not np.isnan(final_centroids).any()
+ 
+
+def test_kmeans_against_sklearn(n_clusters: int=3, n_samples: int=300, n_features: int=2, max_iters: int=150, plot_steps: bool=False):
     """Compares clustering labels against sklearn using Adjusted Rand Index."""
-    pass
+    X, y = blob_data(n_clusters, n_samples, n_features)
+
+    # Ensure the data has been properly generated
+    assert len(np.unique(y)) == n_clusters
+
+    # Initializing the models
+    custom_model = KMeans(k=n_clusters, max_iters=max_iters, plot_steps=plot_steps, random_seed=42)
+    sklearn_model = SklearnKMeans(n_clusters=n_clusters, random_state=42, n_init="auto")
+
+    # Getting the predictions from both models
+    y_pred_custom = custom_model.predict(X)
+    y_pred_sklearn = sklearn_model.fit_predict(X)
+
+    # Finding Adjusted Rand Score by comparing the two labelings, independent of actual cluster values
+    score = adjusted_rand_score(y_pred_sklearn, y_pred_custom)
+    assert score > 0.9 # threshold for similarity
 
 
 if __name__ == "__main__":
@@ -109,8 +139,10 @@ if __name__ == "__main__":
     try:
         for clusters in [2,3,6]:
             for features in[2,5,8]:
-                test_kmeans_cluster_count(n_clusters=clusters, n_features=features)
-                test_kmeans_label_range(n_clusters=clusters, n_features=features)
+                test_kmeans_cluster_count(n_clusters=clusters, n_features=features, plot_steps=False)
+                test_kmeans_label_range(n_clusters=clusters, n_features=features, plot_steps=False)
+                test_kmeans_convergence(n_clusters=clusters, n_features=features, plot_steps=False)
+                test_kmeans_against_sklearn(n_clusters=clusters, n_features=features, plot_steps=False)
 
         print("All Tests Passed")
     except:
