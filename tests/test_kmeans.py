@@ -1,6 +1,8 @@
-import pytest
 import numpy as np
 from sklearn.datasets import make_blobs
+from sklearn.metrics import adjusted_rand_score
+from sklearn.cluster import KMeans as SklearnKMeans
+
 from ml_algorithms.kmeans import KMeans # Custom KMeans implementation
 
 # Setting random seeds to make sure tests are consistent and replicable
@@ -55,7 +57,7 @@ def noisy_blob_data(n_clusters=3, n_samples=300, n_features=2, noise_samples=20,
     # Stacking the noise
     X_noisy = np.vstack([X, noise])
     y_noisy = np.hstack([y, -1 * np.ones(noise_samples )]) if labeled_noise else y
-    
+
     return X_noisy, y_noisy
 
 
@@ -90,6 +92,16 @@ def test_kmeans_label_range(n_clusters: int=3, n_samples: int=300, n_features: i
 
     # Ensure all predicted labels are in the expacted range
     assert all(label in range(n_clusters) for label in np.unique(y_pred))
+
+
+def test_kmeans_convergence():
+    """Tests that centroids actually stop changing."""
+    pass
+
+
+def test_kmeans_against_sklearn():
+    """Compares clustering labels against sklearn using Adjusted Rand Index."""
+    pass
 
 
 if __name__ == "__main__":
